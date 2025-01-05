@@ -1,0 +1,40 @@
+
+import java.util.Arrays;
+
+public class CountAnagrams {
+    int search(String pat, String txt) {
+        int length = pat.length();
+        int[] count = new int[26];
+        Arrays.fill(count, 0);
+        for (char ch : pat.toCharArray()) {
+            count[ch - 'a']++;
+        }
+
+        int i = 0, j = 0;
+        int n = txt.length();
+        int result = 0;
+        while (j < n) {
+            int index = txt.charAt(j) - 'a';
+            count[index]--;
+
+            if (j - i + 1 == length) {
+                if (allZeroCount(count)) {
+                    result++;
+                }
+                count[txt.charAt(i) - 'a']++;
+                i++;
+            }
+            j++;
+        }
+        return result;
+    }
+
+    private boolean allZeroCount(int[] count) {
+        for (int num : count) {
+            if (num != 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+}
